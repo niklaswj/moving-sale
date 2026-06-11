@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Moving Sale — St. Petersburg</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #f7f5f0;
+      color: #1a1a1a;
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    header {
+      background: #fff;
+      border-bottom: 1px solid #e4e0d8;
+      padding: 28px 24px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .header-inner { max-width: 1100px; margin: 0 auto; }
+
+    header h1 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin-bottom: 6px;
+    }
+
+    header h1 span { color: #c0392b; }
+
+    .tagline {
+      font-size: 0.95rem;
+      color: #555;
+      line-height: 1.5;
+      margin-bottom: 16px;
+      max-width: 620px;
+    }
+
+    .contact-line {
+      font-size: 0.88rem;
+      color: #777;
+      margin-bottom: 16px;
+    }
+    .contact-line a {
+      color: #c0392b;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    /* ── Filter bar ── */
+    .filter-bar {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .filter-bar span {
+      font-size: 0.82rem;
+      color: #888;
+      margin-right: 4px;
+    }
+
+    .filter-btn {
+      padding: 6px 16px;
+      border-radius: 20px;
+      border: 1.5px solid #ddd;
+      background: #fff;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.15s;
+      color: #444;
+      font-weight: 500;
+    }
+
+    .filter-btn:hover { border-color: #aaa; }
+
+    .filter-btn.active {
+      background: #1a1a1a;
+      border-color: #1a1a1a;
+      color: #fff;
+    }
+
+    .filter-btn.free.active {
+      background: #2ecc71;
+      border-color: #2ecc71;
+      color: #fff;
+    }
+
+    .item-count {
+      font-size: 0.8rem;
+      color: #aaa;
+      margin-left: auto;
+    }
+
+    /* ── Grid ── */
+    .grid {
+      max-width: 1100px;
+      margin: 32px auto;
+      padding: 0 24px 48px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    /* ── Card ── */
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid #e4e0d8;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    }
+
+    .card-img-wrap { position: relative; }
+
+    .card-img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      background: #ece9e2;
+      display: block;
+    }
+
+    .card-img-placeholder {
+      width: 100%;
+      aspect-ratio: 4/3;
+      background: #ece9e2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.8rem;
+      color: #bbb;
+    }
+
+    /* ── Sold overlay ── */
+    .sold-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      pointer-events: none;
+    }
+
+    .sold-stamp {
+      background: #c0392b;
+      color: #fff;
+      font-size: 1.6rem;
+      font-weight: 900;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      padding: 8px 22px;
+      border-radius: 6px;
+      border: 3px solid rgba(255,255,255,0.6);
+      transform: rotate(-8deg);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+    }
+
+    .sold-pickup {
+      color: #fff;
+      font-size: 0.8rem;
+      font-weight: 600;
+      background: rgba(0,0,0,0.55);
+      padding: 4px 12px;
+      border-radius: 20px;
+      text-align: center;
+      max-width: 200px;
+      line-height: 1.4;
+    }
+
+    .card.is-sold { opacity: 0.75; }
+    .card.is-sold .card-title { text-decoration: line-through; color: #aaa; }
+
+    /* ── Card body ── */
+    .card-body {
+      padding: 14px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .card-title {
+      font-size: 0.98rem;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+
+    .card-desc {
+      font-size: 0.83rem;
+      color: #555;
+      line-height: 1.5;
+      flex: 1;
+    }
+
+    .card-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid #f0ede8;
+      font-size: 0.82rem;
+      color: #777;
+    }
+
+    .card-meta-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* ── Price ── */
+    .price-wrap {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .price-tag {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #1a1a1a;
+    }
+
+    .price-tag.free { color: #27ae60; }
+    .price-tag.tbd  { color: #aaa; font-size: 0.95rem; }
+
+    .orig-price {
+      font-size: 0.8rem;
+      color: #bbb;
+      text-decoration: line-through;
+    }
+
+    .price-note {
+      font-size: 0.75rem;
+      color: #888;
+      font-weight: 500;
+    }
+
+    /* ── Badges ── */
+    .badge {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      white-space: nowrap;
+    }
+
+    .badge-free    { background: #d5f5e3; color: #1e8449; }
+    .badge-forsale { background: #fdebd0; color: #c0392b; }
+
+    .condition-dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-right: 4px;
+    }
+    .cond-excellent { background: #2ecc71; }
+    .cond-good      { background: #f1c40f; }
+    .cond-fair      { background: #e67e22; }
+
+    /* ── Carousel ── */
+    .carousel { position: relative; }
+
+    .carousel-imgs { position: relative; }
+
+    .carousel-img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      display: none;
+    }
+    .carousel-img.active { display: block; }
+
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.45);
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+      transition: background 0.15s;
+      line-height: 1;
+    }
+    .carousel-btn:hover { background: rgba(0,0,0,0.7); }
+    .carousel-btn.prev { left: 8px; }
+    .carousel-btn.next { right: 8px; }
+
+    .carousel-dots {
+      position: absolute;
+      bottom: 7px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 5px;
+      z-index: 2;
+    }
+
+    .carousel-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.5);
+      cursor: pointer;
+      border: none;
+      padding: 0;
+      transition: background 0.15s;
+    }
+    .carousel-dot.active { background: #fff; }
+
+    /* ── Empty state ── */
+    .empty-state {
+      grid-column: 1/-1;
+      text-align: center;
+      padding: 60px 0;
+      color: #aaa;
+      font-size: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <h1>Moving Sale <span>— St. Petersburg</span></h1>
+    <p class="tagline">
+      We're moving from St. Pete and <strong>everything must go</strong> by
+      <strong>Friday, June 19</strong>. Pick up only — we're in the <strong>Old Northeast</strong>,
+      not far from The Vinoy. Text Catherine for address and pickup coordination.
+    </p>
+    <p class="contact-line"><a href="sms:3032418101">(303) 241-8101</a></p>
+    <div class="filter-bar">
+      <span>Show:</span>
+      <button class="filter-btn active" data-filter="all">All items</button>
+      <button class="filter-btn free" data-filter="free">Free only</button>
+      <button class="filter-btn" data-filter="forsale">For sale</button>
+      <span class="item-count" id="item-count"></span>
+    </div>
+  </div>
+</header>
+
+<main class="grid" id="grid"></main>
+
+<script>
+  // ─────────────────────────────────────────────
+  //  ITEMS — add/edit items here
+  //  price: null = TBD  |  free: true = Free
+  //  sold: true + soldPickup: "Date · Time"
+  // ─────────────────────────────────────────────
+  const items = [
+    {
+      title: "Handmade Wood Console Table",
+      description: "Solid wood console table with a warm walnut stain and visible grain. Slim profile — great for an entryway, hallway, or behind a sofa.",
+      price: 50, originalPrice: null, free: false, condition: "excellent",
+      deadline: "June 19", image: "IMG_7175.jpeg", sold: false
+    },
+    {
+      title: "Dracaena (Corn Plant) — ~4 ft",
+      description: "Large, healthy Dracaena fragrans in a woven wicker basket planter. Low-maintenance, thrives in indirect light. Free to a good home!",
+      price: 0, originalPrice: null, free: true, condition: "excellent",
+      deadline: "June 19", image: "IMG_7176.jpeg", sold: false
+    },
+    {
+      title: "Yeti Tundra 65 Cooler — Charcoal",
+      description: "Yeti Tundra 65 hard cooler in charcoal. Scarcely used — has mostly sat in the garage or patio. Will be wiped down before pickup. <a href=\"https://www.amazon.com/dp/B07D1BQ2PN\" target=\"_blank\" style=\"color:#c0392b;\">See on Amazon ↗</a>",
+      price: 150, originalPrice: null, free: false, condition: "excellent",
+      deadline: "June 19", image: "IMG_7177.jpeg", sold: false
+    },
+    {
+      title: "Portable Basketball Hoop",
+      description: "Full-size portable basketball hoop with acrylic backboard, adjustable height, and weighted base. Includes two nets. Needs disassembly — bring your own tools.",
+      price: 100, originalPrice: 250, free: false, condition: "good",
+      deadline: "June 11", image: "IMG_7178.jpeg", sold: true, soldPickup: "June 11"
+    },
+    {
+      title: "Leather Barstools",
+      description: "Set of leather barstools in great condition. Sold individually at $50 each.",
+      price: 50, originalPrice: 150, priceNote: "/ ea.", free: false, condition: "good",
+      deadline: "June 19", emoji: "🪑", sold: false
+    },
+    {
+      title: "Crib & Mattress",
+      description: "Baby crib with mattress. More details coming soon.",
+      price: null, originalPrice: null, free: false, condition: "good",
+      deadline: "June 19", emoji: "🛏️", sold: false
+    },
+    {
+      title: "White Dresser",
+      description: "White dresser. More details and dimensions coming soon.",
+      price: null, originalPrice: null, free: false, condition: "good",
+      deadline: "June 19", emoji: "🗄️", sold: false
+    },
+    {
+      title: "Oriental Rug — Large",
+      description: "Large oriental rug. Dimensions and more details coming soon.",
+      price: null, originalPrice: null, free: false, condition: "good",
+      deadline: "June 19", emoji: "🏺", sold: false
+    },
+    {
+      title: "Oriental Rug — Deep Red",
+      description: "Deep red oriental rug. Dimensions and more details coming soon.",
+      price: null, originalPrice: null, free: false, condition: "good",
+      deadline: "June 19", emoji: "🏺", sold: false
+    },
+    {
+      title: "Oriental Rug Runner — Washed Red",
+      description: "Washed red oriental rug runner. Dimensions and more details coming soon.",
+      price: null, originalPrice: null, free: false, condition: "good",
+      deadline: "June 19", emoji: "🏺", sold: false
+    },
+    {
+      title: "Decorative Giraffe",
+      description: "Decorative giraffe sculpture/figurine. More details coming soon.",
+      price: null, originalPrice: null, free: false, condition: "excellent",
+      deadline: "June 19", emoji: "🦒", sold: false
+    },
+    {
+      title: "Wood Side Table — Large",
+      description: "Large wood side table. More details and dimensions coming soon.",
+      price: null, originalPrice: null, free: false, condition: "good",
+      deadline: "June 19", emoji: "🪵", sold: false
+    },
+    {
+      title: "Wood Side Table — Small",
+      description: "Small wood side table. More details and dimensions coming soon.",
+      price: null, originalPrice: null, free: false, condition: "good",
+      deadline: "June 19", emoji: "🪵", sold: false
+    },
+    {
+      title: "White Kids Dresser",
+      description: "White kids dresser (Crate & Barrel). More details coming soon.",
+      price: null, originalPrice: null, free: false, condition: "good",
+      deadline: "June 19", emoji: "🗄️", sold: false
+    },
+    {
+      title: "Electric Bike",
+      description: "Electric bike. Specs, photos, and more details coming soon.",
+      price: null, originalPrice: null, free: false, condition: "good",
+      deadline: "June 19", emoji: "🚲", sold: false
+    },
+    {
+      title: "Electric Scooter",
+      description: "Electric scooter. More details and photos coming soon.",
+      price: null, originalPrice: null, free: false, condition: "good",
+      deadline: "June 19", emoji: "🛴", sold: false
+    },
+    {
+      title: "Swing Set",
+      description: "Backyard swing set. Dimensions and more details coming soon.",
+      price: null, originalPrice: null, free: false, condition: "good",
+      deadline: "June 19", emoji: "🎠", sold: false
+    },
+    {
+      title: "Trampoline",
+      description: "Backyard trampoline with enclosure netting.",
+      price: 100, originalPrice: 400, free: false, condition: "good",
+      deadline: "June 19", emoji: "⭕", sold: false
+    },
+    {
+      title: "IKEA Mesh Shelf Drawers",
+      description: "IKEA mesh shelf drawer unit. Great for storage and organization. More details coming soon.",
+      price: null, originalPrice: null, free: false, condition: "good",
+      deadline: "June 19", emoji: "📦", sold: false
+    },
+    {
+      title: "West Elm Gold Pendant Light",
+      description: "Statement gold pendant light from West Elm. Perfect for a living room or dining area.",
+      price: 100, originalPrice: 400, free: false, condition: "excellent",
+      deadline: "June 19", emoji: "💡", sold: false
+    },
+    {
+      title: "Air Purifier",
+      description: "Air purifier in good working condition. More details and model coming soon.",
+      price: 50, originalPrice: null, free: false, condition: "good",
+      deadline: "June 19", emoji: "💨", sold: false
+    },
+    {
+      title: "Air Purifier #2",
+      description: "Second air purifier. More details coming soon.",
+      price: null, originalPrice: null, free: false, condition: "good",
+      deadline: "June 19", emoji: "💨", sold: false
+    },
+    {
+      title: "Gardyn Indoor Garden System",
+      description: "Gardyn smart indoor garden — grow herbs, greens, and plants year-round. More details coming soon.",
+      price: 700, originalPrice: null, free: false, condition: "excellent",
+      deadline: "June 19", emoji: "🌿", sold: false
+    },
+    {
+      title: "KitchenAid Stand Mixer",
+      description: "KitchenAid stand mixer, a kitchen staple. More details and color coming soon.",
+      price: 200, originalPrice: 400, free: false, condition: "good",
+      deadline: "June 19", emoji: "🍳", sold: false
+    },
+    {
+      title: "Vitamix Blender",
+      description: "Vitamix blender — one of the best on the market. More details coming soon.",
+      price: 150, originalPrice: 300, free: false, condition: "good",
+      deadline: "June 19", emoji: "🥤", sold: false
+    },
+    {
+      title: "Artificial Christmas Tree",
+      description: "Artificial Christmas tree. Size and more details coming soon.",
+      price: 100, originalPrice: 350, free: false, condition: "good",
+      deadline: "June 19", emoji: "🎄", sold: false
+    },
+    {
+      title: "Wooden End Tables",
+      description: "Set of wooden end tables. More details coming soon.",
+      price: 100, originalPrice: 200, free: false, condition: "good",
+      deadline: "June 19", emoji: "🪵", sold: false
+    },
+    {
+      title: "IKEA Cabinets",
+      description: "IKEA cabinet(s). Price TBD — more details coming soon.",
+      price: null, originalPrice: null, free: false, condition: "good",
+      deadline: "June 19", emoji: "🗄️", sold: false
+    },
+    {
+      title: "IKEA Shelving",
+      description: "IKEA shelving unit(s). More details coming soon.",
+      price: null, originalPrice: null, free: false, condition: "good",
+      deadline: "June 19", emoji: "📚", sold: false
+    },
+    {
+      title: "Crate & Barrel Arm Chair — Green",
+      description: "Beautiful green upholstered arm chair from Crate & Barrel. A real statement piece.",
+      price: 200, originalPrice: 800, free: false, condition: "good",
+      deadline: "June 19", emoji: "🪑", sold: false
+    },
+    {
+      title: "58\" Hisense TV",
+      description: "58-inch Hisense flat screen TV. More details and model coming soon.",
+      price: 100, originalPrice: 400, free: false, condition: "good",
+      deadline: "June 19", emoji: "📺", sold: false
+    },
+    {
+      title: "Leaf Blower — Nearly New",
+      description: "Leaf blower in nearly new condition, barely used.",
+      price: 250, originalPrice: 400, free: false, condition: "excellent",
+      deadline: "June 19", emoji: "🌬️", sold: false
+    },
+    {
+      title: "Coffee Machine",
+      description: "High-end coffee machine. Brand and more details coming soon.",
+      price: 1000, originalPrice: 3000, free: false, condition: "good",
+      deadline: "June 19", emoji: "☕", sold: false
+    },
+    {
+      title: "CA King Headboard & Mattress",
+      description: "California King headboard and mattress from Restoration Hardware. High quality, luxurious.",
+      price: 250, originalPrice: null, free: false, condition: "good",
+      deadline: "June 19", emoji: "🛏️", sold: false
+    },
+    {
+      title: "AquaTru Water Purifier",
+      description: "AquaTru countertop reverse osmosis water purification system.",
+      price: 100, originalPrice: 400, free: false, condition: "good",
+      deadline: "June 19", emoji: "💧", sold: false
+    },
+    {
+      title: "Levoit Vacuum — 1 Year Old",
+      description: "Levoit vacuum cleaner with about one year of use. More details coming soon.",
+      price: null, originalPrice: null, free: false, condition: "good",
+      deadline: "June 19", emoji: "🧹", sold: false
+    },
+    {
+      title: "Shower Curtain",
+      description: "Shower curtain. More details coming soon.",
+      price: null, originalPrice: null, free: false, condition: "good",
+      deadline: "June 19", emoji: "🚿", sold: false
+    },
+  ];
+  // ─────────────────────────────────────────────
+
+  // Normalize image field to array
+  function imgs(item) {
+    if (!item.image) return [];
+    return Array.isArray(item.image) ? item.image : [item.image];
+  }
+
+  // Carousel controls
+  function slide(btn, dir) {
+    const wrap = btn.closest('.carousel-imgs');
+    const allImgs = wrap.querySelectorAll('.carousel-img');
+    const dots = wrap.querySelectorAll('.carousel-dot');
+    let idx = parseInt(wrap.dataset.idx);
+    idx = (idx + dir + allImgs.length) % allImgs.length;
+    allImgs.forEach((el, i) => el.classList.toggle('active', i === idx));
+    dots.forEach((el, i) => el.classList.toggle('active', i === idx));
+    wrap.dataset.idx = idx;
+  }
+
+  function goTo(dot, idx) {
+    const wrap = dot.closest('.carousel-imgs');
+    const allImgs = wrap.querySelectorAll('.carousel-img');
+    const dots = wrap.querySelectorAll('.carousel-dot');
+    allImgs.forEach((el, i) => el.classList.toggle('active', i === idx));
+    dots.forEach((el, i) => el.classList.toggle('active', i === idx));
+    wrap.dataset.idx = idx;
+  }
+
+  const conditionLabel = { excellent: "Excellent", good: "Good", fair: "Fair" };
+  const conditionClass = { excellent: "cond-excellent", good: "cond-good", fair: "cond-fair" };
+
+  function formatPrice(item) {
+    if (item.free) {
+      return `<span class="price-tag free">FREE</span>`;
+    }
+    if (item.price === null) {
+      return `<span class="price-tag tbd">Price TBD</span>`;
+    }
+    const savings = item.originalPrice ? item.originalPrice - item.price : 0;
+    return `
+      <div class="price-wrap">
+        <span class="price-tag">$${item.price}${item.priceNote ? `<span class="price-note"> ${item.priceNote}</span>` : ''}</span>
+        ${item.originalPrice ? `<span class="orig-price">orig. $${item.originalPrice}</span>` : ''}
+      </div>`;
+  }
+
+  function renderCards(filter) {
+    const grid = document.getElementById("grid");
+    const filtered = items.filter(item => {
+      if (filter === "free")    return item.free;
+      if (filter === "forsale") return !item.free;
+      return true;
+    });
+
+    document.getElementById("item-count").textContent =
+      `${filtered.length} item${filtered.length !== 1 ? 's' : ''}`;
+
+    grid.innerHTML = filtered.length === 0
+      ? `<div class="empty-state">No items match this filter.</div>`
+      : filtered.map(item => `
+        <div class="card${item.sold ? ' is-sold' : ''}">
+          <div class="card-img-wrap ${imgs(item).length > 1 ? 'carousel' : ''}">
+            ${imgs(item).length === 0
+              ? `<div class="card-img-placeholder">${item.emoji || "📦"}</div>`
+              : imgs(item).length === 1
+                ? `<img class="card-img" src="${imgs(item)[0]}" alt="${item.title}" loading="lazy" />`
+                : `<div class="carousel-imgs" data-idx="0">
+                    ${imgs(item).map((src, i) => `<img class="carousel-img${i===0?' active':''}" src="${src}" alt="${item.title} photo ${i+1}" loading="lazy" />`).join('')}
+                    <button class="carousel-btn prev" onclick="slide(this,-1)">&#8249;</button>
+                    <button class="carousel-btn next" onclick="slide(this,1)">&#8250;</button>
+                    <div class="carousel-dots">
+                      ${imgs(item).map((_,i) => `<button class="carousel-dot${i===0?' active':''}" onclick="goTo(this,${i})"></button>`).join('')}
+                    </div>
+                  </div>`
+            }
+            ${item.sold ? `
+            <div class="sold-overlay">
+              <div class="sold-stamp">SOLD</div>
+              ${item.soldPickup ? `<div class="sold-pickup">Pick up: ${item.soldPickup}</div>` : ''}
+            </div>` : ''}
+          </div>
+          <div class="card-body">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+              <div class="card-title">${item.title}</div>
+              <span class="badge ${item.free ? 'badge-free' : 'badge-forsale'}">${item.free ? 'Free' : 'For Sale'}</span>
+            </div>
+            <div class="card-desc">${item.description}</div>
+            <div class="card-meta">
+              <div class="card-meta-row">
+                ${formatPrice(item)}
+                <span>
+                  <span class="condition-dot ${conditionClass[item.condition]}"></span>
+                  ${conditionLabel[item.condition]}
+                </span>
+              </div>
+              <div class="card-meta-row">
+                <span>📅 Pickup by <strong>${item.deadline}</strong></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      `).join("");
+  }
+
+  document.querySelectorAll(".filter-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      renderCards(btn.dataset.filter);
+    });
+  });
+
+  renderCards("all");
+</script>
+
+</body>
+</html>
