@@ -365,8 +365,9 @@
     <div class="filter-bar">
       <span>Show:</span>
       <button class="filter-btn active" data-filter="all">All items</button>
-      <button class="filter-btn free" data-filter="free">Free only</button>
+      <button class="filter-btn free" data-filter="free">Free</button>
       <button class="filter-btn" data-filter="forsale">For sale</button>
+      <button class="filter-btn toggle-btn" id="hide-sold-btn">Hide sold</button>
       <span class="item-count" id="item-count"></span>
     </div>
   </div>
@@ -455,45 +456,45 @@
     },
     {
       title: "Wood Side Table — Small",
-      description: "Small wood side table. More details and dimensions coming soon.",
+      description: "Small wood side table.",
       price: null, originalPrice: null, free: false, condition: "good",
-      deadline: "June 19", emoji: "🪵", sold: false
+      deadline: "June 19", image: ["small-wall-table-a.jpeg","small-wall-table-b.jpeg"], sold: false
     },
     {
       title: "White Kids Dresser",
-      description: "White kids dresser (Crate & Barrel). More details coming soon.",
+      description: "White kids dresser (Crate & Barrel).",
       price: null, originalPrice: null, free: false, condition: "good",
-      deadline: "June 19", emoji: "🗄️", sold: false
+      deadline: "June 19", image: ["drawer-a.jpeg","drawer-b.jpeg","drawer-c.jpeg","drawer-d.jpeg"], sold: false
     },
     {
       title: "Electric Bike",
-      description: "Electric bike. Specs, photos, and more details coming soon.",
+      description: "Electric bike.",
       price: null, originalPrice: null, free: false, condition: "good",
-      deadline: "June 19", emoji: "🚲", sold: false
+      deadline: "June 19", image: "electra.jpeg", sold: false
     },
     {
       title: "Electric Scooter",
-      description: "Electric scooter. More details and photos coming soon.",
+      description: "Electric scooter.",
       price: null, originalPrice: null, free: false, condition: "good",
-      deadline: "June 19", emoji: "🛴", sold: false
+      deadline: "June 19", emoji: "🛴", sold: true
     },
     {
       title: "Swing Set",
-      description: "Backyard swing set. Dimensions and more details coming soon.",
+      description: "Backyard swing set.",
       price: null, originalPrice: null, free: false, condition: "good",
-      deadline: "June 19", emoji: "🎠", sold: false
+      deadline: "June 19", emoji: "🎠", sold: true
     },
     {
       title: "Trampoline",
       description: "Backyard trampoline with enclosure netting.",
       price: 100, originalPrice: 400, free: false, condition: "good",
-      deadline: "June 19", emoji: "⭕", sold: false
+      deadline: "June 19", emoji: "⭕", sold: true
     },
     {
       title: "IKEA Mesh Shelf Drawers",
-      description: "IKEA mesh shelf drawer unit. Great for storage and organization. More details coming soon.",
+      description: "IKEA mesh shelf drawer unit. Great for storage and organization.",
       price: null, originalPrice: null, free: false, condition: "good",
-      deadline: "June 19", emoji: "📦", sold: false
+      deadline: "June 19", image: ["ikea-shelf-big-a.jpeg","ikea-shelf-big-b.jpeg"], sold: false
     },
     {
       title: "West Elm Gold Pendant Light",
@@ -515,27 +516,27 @@
     },
     {
       title: "Gardyn Indoor Garden System",
-      description: "Gardyn smart indoor garden — grow herbs, greens, and plants year-round. More details coming soon.",
+      description: "Gardyn smart indoor garden — grow herbs, greens, and plants year-round.",
       price: 700, originalPrice: null, free: false, condition: "excellent",
-      deadline: "June 19", emoji: "🌿", sold: false
+      deadline: "June 19", emoji: "🌿", sold: true
     },
     {
       title: "KitchenAid Stand Mixer",
-      description: "KitchenAid stand mixer, a kitchen staple. More details and color coming soon.",
+      description: "KitchenAid stand mixer, a kitchen staple.",
       price: 200, originalPrice: 400, free: false, condition: "good",
-      deadline: "June 19", emoji: "🍳", sold: false
+      deadline: "June 19", emoji: "🍳", sold: true
     },
     {
       title: "Vitamix Blender",
-      description: "Vitamix blender — one of the best on the market. More details coming soon.",
+      description: "Vitamix blender — one of the best on the market.",
       price: 150, originalPrice: 300, free: false, condition: "good",
-      deadline: "June 19", emoji: "🥤", sold: false
+      deadline: "June 19", emoji: "🥤", sold: true
     },
     {
       title: "Artificial Christmas Tree",
-      description: "Artificial Christmas tree. Size and more details coming soon.",
+      description: "Artificial Christmas tree.",
       price: 100, originalPrice: 350, free: false, condition: "good",
-      deadline: "June 19", emoji: "🎄", sold: false
+      deadline: "June 19", emoji: "🎄", sold: true
     },
     {
       title: "Wooden End Tables",
@@ -545,39 +546,33 @@
     },
     {
       title: "IKEA Cabinets",
-      description: "IKEA cabinet(s). Price TBD — more details coming soon.",
+      description: "IKEA cabinet(s).",
       price: null, originalPrice: null, free: false, condition: "good",
-      deadline: "June 19", emoji: "🗄️", sold: false
-    },
-    {
-      title: "IKEA Shelving",
-      description: "IKEA shelving unit(s). More details coming soon.",
-      price: null, originalPrice: null, free: false, condition: "good",
-      deadline: "June 19", emoji: "📚", sold: false
+      deadline: "June 19", image: "ikea-shelf-small.jpeg", sold: false
     },
     {
       title: "Crate & Barrel Arm Chair — Green",
       description: "Beautiful green upholstered arm chair from Crate & Barrel. A real statement piece.",
       price: 200, originalPrice: 800, free: false, condition: "good",
-      deadline: "June 19", emoji: "🪑", sold: false
+      deadline: "June 19", emoji: "🪑", sold: true
     },
     {
       title: "58\" Hisense TV",
-      description: "58-inch Hisense flat screen TV. More details and model coming soon.",
+      description: "58-inch Hisense flat screen TV.",
       price: 100, originalPrice: 400, free: false, condition: "good",
-      deadline: "June 19", emoji: "📺", sold: false
+      deadline: "June 19", emoji: "📺", sold: true
     },
     {
       title: "Leaf Blower — Nearly New",
       description: "Leaf blower in nearly new condition, barely used.",
       price: 250, originalPrice: 400, free: false, condition: "excellent",
-      deadline: "June 19", emoji: "🌬️", sold: false
+      deadline: "June 19", emoji: "🌬️", sold: true
     },
     {
       title: "Coffee Machine",
-      description: "High-end coffee machine. Brand and more details coming soon.",
+      description: "High-end coffee machine.",
       price: 1000, originalPrice: 3000, free: false, condition: "good",
-      deadline: "June 19", emoji: "☕", sold: false
+      deadline: "June 19", emoji: "☕", sold: true
     },
     {
       title: "CA King Headboard & Mattress",
@@ -599,9 +594,9 @@
     },
     {
       title: "Shower Curtain",
-      description: "Shower curtain. More details coming soon.",
+      description: "Shower curtain.",
       price: null, originalPrice: null, free: false, condition: "good",
-      deadline: "June 19", emoji: "🚿", sold: false
+      deadline: "June 19", image: "shower-curtain.jpeg", sold: false
     },
   ];
   // ─────────────────────────────────────────────
@@ -633,6 +628,20 @@
     wrap.dataset.idx = idx;
   }
 
+  // Touch swipe support
+  document.addEventListener('touchstart', e => {
+    const wrap = e.target.closest('.carousel-imgs');
+    if (wrap) wrap._touchX = e.touches[0].clientX;
+  }, { passive: true });
+
+  document.addEventListener('touchend', e => {
+    const wrap = e.target.closest('.carousel-imgs');
+    if (!wrap || wrap._touchX == null) return;
+    const dx = e.changedTouches[0].clientX - wrap._touchX;
+    if (Math.abs(dx) > 40) slide({ closest: () => wrap }, dx < 0 ? 1 : -1);
+    wrap._touchX = null;
+  }, { passive: true });
+
   const conditionLabel = { excellent: "Excellent", good: "Good", fair: "Fair" };
   const conditionClass = { excellent: "cond-excellent", good: "cond-good", fair: "cond-fair" };
 
@@ -651,9 +660,10 @@
       </div>`;
   }
 
-  function renderCards(filter) {
+  function renderCards(filter, hideSold = false) {
     const grid = document.getElementById("grid");
     const filtered = items.filter(item => {
+      if (hideSold && item.sold) return false;
       if (filter === "free")    return item.free;
       if (filter === "forsale") return !item.free;
       return true;
@@ -709,15 +719,25 @@
       `).join("");
   }
 
-  document.querySelectorAll(".filter-btn").forEach(btn => {
+  let currentFilter = "all";
+  let hideSold = false;
+
+  document.querySelectorAll(".filter-btn:not(.toggle-btn)").forEach(btn => {
     btn.addEventListener("click", () => {
-      document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+      document.querySelectorAll(".filter-btn:not(.toggle-btn)").forEach(b => b.classList.remove("active"));
       btn.classList.add("active");
-      renderCards(btn.dataset.filter);
+      currentFilter = btn.dataset.filter;
+      renderCards(currentFilter, hideSold);
     });
   });
 
-  renderCards("all");
+  document.getElementById("hide-sold-btn").addEventListener("click", function() {
+    hideSold = !hideSold;
+    this.classList.toggle("active", hideSold);
+    renderCards(currentFilter, hideSold);
+  });
+
+  renderCards("all", false);
 </script>
 
 </body>
