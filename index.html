@@ -348,44 +348,48 @@
     }
     .carousel-dot.active { background: #fff; }
 
-    /* ── Payment section ── */
-    .payment-section {
-      margin-bottom: 16px;
+    /* ── Compact intro ── */
+    .header-intro {
+      border-bottom: 1px solid #e4e0d8;
     }
 
-    .payment-label {
-      font-size: 0.85rem;
-      color: #555;
-      margin-bottom: 10px;
-      font-weight: 500;
-    }
-
-    .payment-qrs {
+    .intro-line {
       display: flex;
-      gap: 16px;
-      align-items: flex-start;
+      align-items: center;
       flex-wrap: wrap;
+      gap: 12px;
+      font-size: 0.82rem;
+      color: #555;
     }
 
-    .payment-qr {
+    .intro-line a { color: #c0392b; font-weight: 600; text-decoration: none; }
+
+    .intro-qrs {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-left: auto;
+    }
+
+    .intro-qr {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 5px;
+      gap: 2px;
     }
 
-    .payment-qr img {
-      width: 100px;
-      height: 100px;
+    .intro-qr img {
+      width: 52px;
+      height: 52px;
       object-fit: contain;
-      border-radius: 8px;
+      border-radius: 5px;
       border: 1px solid #e4e0d8;
     }
 
-    .payment-qr span {
-      font-size: 0.78rem;
+    .intro-qr span {
+      font-size: 0.68rem;
       font-weight: 600;
-      color: #555;
+      color: #777;
     }
 
     /* ── Empty state ── */
@@ -401,23 +405,16 @@
 <body>
 
 <div class="header-intro">
-  <div class="header-inner">
-    <h1>Moving Sale <span>— St. Petersburg</span></h1>
-    <p class="tagline">
-      We're moving from St. Pete and <strong>everything must go</strong> by
-      <strong>Friday, June 19</strong>. Pick up only — we're in the <strong>Old Northeast</strong>,
-      not far from The Vinoy. Text Catherine for address and pickup coordination.
-    </p>
-    <p class="contact-line"><a href="sms:3032418101">(303) 241-8101</a></p>
-    <div class="payment-section">
-      <p class="payment-label">Payment via Venmo, Zelle, or cash:</p>
-      <div class="payment-qrs">
-        <div class="payment-qr">
-          <img src="WhatsApp Image 2026-06-13 at 22.34.44.jpeg" alt="Venmo QR code" />
+  <div class="header-inner" style="padding: 10px 24px;">
+    <div class="intro-line">
+      <span>Old Northeast, St. Pete &mdash; pick up only &mdash; <strong>everything must go by June 19</strong> &mdash; text <a href="sms:3032418101">(303) 241-8101</a> &mdash; cash, Venmo, or Zelle:</span>
+      <div class="intro-qrs">
+        <div class="intro-qr">
+          <img src="WhatsApp Image 2026-06-13 at 22.34.44.jpeg" alt="Venmo QR" />
           <span>Venmo</span>
         </div>
-        <div class="payment-qr">
-          <img src="WhatsApp Image 2026-06-13 at 22.34.26.jpeg" alt="Zelle QR code" />
+        <div class="intro-qr">
+          <img src="WhatsApp Image 2026-06-13 at 22.34.26.jpeg" alt="Zelle QR" />
           <span>Zelle</span>
         </div>
       </div>
