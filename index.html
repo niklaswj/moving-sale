@@ -341,6 +341,46 @@
     }
     .carousel-dot.active { background: #fff; }
 
+    /* ── Payment section ── */
+    .payment-section {
+      margin-bottom: 16px;
+    }
+
+    .payment-label {
+      font-size: 0.85rem;
+      color: #555;
+      margin-bottom: 10px;
+      font-weight: 500;
+    }
+
+    .payment-qrs {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+
+    .payment-qr {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .payment-qr img {
+      width: 100px;
+      height: 100px;
+      object-fit: contain;
+      border-radius: 8px;
+      border: 1px solid #e4e0d8;
+    }
+
+    .payment-qr span {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #555;
+    }
+
     /* ── Empty state ── */
     .empty-state {
       grid-column: 1/-1;
@@ -362,6 +402,19 @@
       not far from The Vinoy. Text Catherine for address and pickup coordination.
     </p>
     <p class="contact-line"><a href="sms:3032418101">(303) 241-8101</a></p>
+    <div class="payment-section">
+      <p class="payment-label">Payment via Venmo or Zelle:</p>
+      <div class="payment-qrs">
+        <div class="payment-qr">
+          <img src="WhatsApp Image 2026-06-13 at 22.34.44.jpeg" alt="Venmo QR code" />
+          <span>Venmo</span>
+        </div>
+        <div class="payment-qr">
+          <img src="WhatsApp Image 2026-06-13 at 22.34.26.jpeg" alt="Zelle QR code" />
+          <span>Zelle</span>
+        </div>
+      </div>
+    </div>
     <div class="filter-bar">
       <span>Show:</span>
       <button class="filter-btn active" data-filter="all">All items</button>
@@ -555,12 +608,12 @@
       title: "Office Chair",
       description: "Comfortable office chair in good condition.",
       price: 20, originalPrice: null, free: false, condition: "good",
-      deadline: "June 19", image: "chair.jpeg", sold: false
+      deadline: "June 19", image: "WhatsApp Image 2026-06-13 at 22.39.50.jpeg", sold: false
     },
     // ── $50 ──
     {
       title: "Handmade Wood Console Table",
-      description: "Handmade solid wood console table with a warm walnut stain and visible grain. Fairly large — perfect for a living room, formal room, or hallway.",
+      description: "Handmade solid wood console table with a warm walnut stain and visible grain. Fairly large — perfect for a living room, formal room, or hallway. 69\" wide × 10.75\" deep × 32\" tall.",
       price: 20, originalPrice: null, free: false, condition: "excellent",
       deadline: "June 19", image: "IMG_7175.jpeg", sold: false
     },
@@ -590,7 +643,7 @@
     },
     {
       title: "Wood Side Table — Small",
-      description: "Handmade wood side table. Perfect for a home office or living room.",
+      description: "Handmade wood side table. Perfect for a home office or living room. 47\" wide × 10.75\" deep × 32\" tall.",
       price: 20, originalPrice: null, free: false, condition: "good",
       deadline: "June 19", image: ["small-wall-table-a.jpeg","small-wall-table-b.jpeg"], sold: false
     },
