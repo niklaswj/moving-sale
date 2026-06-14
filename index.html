@@ -429,7 +429,8 @@
       <button class="filter-btn active" data-filter="all">All items</button>
       <button class="filter-btn free" data-filter="free">Free</button>
       <button class="filter-btn" data-filter="forsale">For sale</button>
-      <button class="filter-btn toggle-btn" id="hide-sold-btn">Hide sold</button>
+      <button class="filter-btn" data-filter="under20">$20 &amp; under</button>
+      <button class="filter-btn toggle-btn active" id="hide-sold-btn">Hide sold</button>
       <span class="item-count" id="item-count"></span>
     </div>
   </div>
@@ -816,7 +817,8 @@
     const filtered = items.filter(item => {
       if (hideSold && item.sold) return false;
       if (filter === "free")    return item.free;
-      if (filter === "forsale") return !item.free;
+      if (filter === "forsale") return !item.free && !item.sold;
+      if (filter === "under20") return !item.free && item.price != null && item.price <= 20;
       return true;
     });
 
@@ -871,7 +873,7 @@
   }
 
   let currentFilter = "all";
-  let hideSold = false;
+  let hideSold = true;
 
   document.querySelectorAll(".filter-btn:not(.toggle-btn)").forEach(btn => {
     btn.addEventListener("click", () => {
@@ -888,7 +890,7 @@
     renderCards(currentFilter, hideSold);
   });
 
-  renderCards("all", false);
+  renderCards("all", true);
 </script>
 
 </body>
