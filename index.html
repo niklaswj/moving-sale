@@ -15,16 +15,23 @@
     }
 
     /* ── Header ── */
-    header {
+    .header-intro {
+      background: #fff;
+      padding: 28px 24px 16px;
+    }
+
+    .sticky-bar {
       background: #fff;
       border-bottom: 1px solid #e4e0d8;
-      padding: 28px 24px 20px;
+      padding: 12px 24px;
       position: sticky;
       top: 0;
       z-index: 10;
     }
 
     .header-inner { max-width: 1100px; margin: 0 auto; }
+    .sticky-bar .header-inner { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+    .sticky-bar h1 { margin-bottom: 0; white-space: nowrap; }
 
     header h1 {
       font-size: 1.6rem;
@@ -393,7 +400,7 @@
 </head>
 <body>
 
-<header>
+<div class="header-intro">
   <div class="header-inner">
     <h1>Moving Sale <span>— St. Petersburg</span></h1>
     <p class="tagline">
@@ -415,6 +422,11 @@
         </div>
       </div>
     </div>
+  </div>
+</div>
+<div class="sticky-bar">
+  <div class="header-inner">
+    <h1>Moving Sale <span>— St. Petersburg</span></h1>
     <div class="filter-bar">
       <span>Show:</span>
       <button class="filter-btn active" data-filter="all">All items</button>
@@ -424,7 +436,7 @@
       <span class="item-count" id="item-count"></span>
     </div>
   </div>
-</header>
+</div>
 
 <main class="grid" id="grid"></main>
 
